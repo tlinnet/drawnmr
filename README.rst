@@ -20,6 +20,11 @@ Important Links
 * Link to nmrglue: https://www.nmrglue.com and https://github.com/jjhelmus/nmrglue
 * Link to bokeh: https://bokeh.pydata.org and https://github.com/bokeh/bokeh
 
+Examples with nbviewer.jupyter.org
+----------------------------------
+
+* `nmrglue_s4_2d_plotting <https://github.com/tlinnet/drawnmr/blob/master/examples/nmrglue_s4_2d_plotting.ipynb_.
+
 What can drawnmr do?
 --------------------
 
