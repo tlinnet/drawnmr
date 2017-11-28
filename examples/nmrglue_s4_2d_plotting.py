@@ -22,19 +22,22 @@ ng_dic, ng_data = ng.pipe.read(ng_ft2)
 
 # Pass to figure class
 fig2d = draw.fig2d(ng_dic, ng_data)
-# Get the boheh figure
-fig = fig2d.get_fig()
+# Get the boheh figure and layout
+fig, layout = fig2d.get_fig()
+
+# Alter the figure after creation
+fig.xaxis.axis_label = "Nonsense"
 
 # Get output. Either to Jupyter notebook or html file 
 if fig2d.isnotebook():
     from bokeh.io import output_notebook
     output_notebook()
-    bplt.show(fig)
+    bplt.show(layout)
 else:
     # Save to html
     filename = "nmrglue_s4_2d_plotting.html"
     bplt.output_file(filename)
-    bplt.save(fig)
+    bplt.save(layout)
     # And auto open
     import webbrowser, os
     webbrowser.open('file://' + os.path.realpath(filename))
