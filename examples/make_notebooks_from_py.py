@@ -4,10 +4,15 @@ import os
 import glob
 
 for filepath in glob.iglob('**/*.py', recursive=True):
+#for filepath in glob.iglob('*.py'):
     # Pass
     if filepath in ['make_notebooks_from_py.py']:
         continue
     # Get filename and extension
     f, ext = os.path.splitext(filepath)
-    python_to_notebook(f+'.py', f+'.ipynb')
-    print("Converting to .ipynb notebook:", filepath)
+    # Only replace if not existing
+    if os.path.isfile(f+'.ipynb'):
+        print(".ipynb notebook already exists:", filepath)
+    else:
+        python_to_notebook(f+'.py', f+'.ipynb')
+        print("Converting to .ipynb notebook:", filepath)
