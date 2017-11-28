@@ -1,0 +1,25 @@
+# This file may be used to create an environment using:
+## Create environment
+# conda create -n py36 python=3.6
+# conda install -y -n py36 --file conda_req.txt
+#
+## Activate environment
+# alias py36='source activate py36'
+#
+## Pip install
+# pip install -r requirements.txt 
+#
+## Remove environment or export
+# conda env remove -n py36
+# conda env export > environment.yml
+
+numpy
+scipy
+matplotlib
+bokeh
+
+# To convert into Jupyter notebooks
+# and use with 'jupyter notebook'
+ipython
+nbformat
+jupyter

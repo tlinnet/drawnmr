@@ -1,0 +1,3 @@
+nmrglue
+# To convert into .ipynb notebooks from .py files
+https://github.com/sklam/py2nb/archive/master.zip
