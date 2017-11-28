@@ -3,12 +3,18 @@ from matplotlib.contour import QuadContourSet
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 import bokeh.plotting as bplt
-from bokeh.models import ColumnDataSource, Range1d
+from bokeh.models import ColumnDataSource, Range1d, LassoSelectTool, BoxZoomTool, BoxSelectTool
+import bokeh.layouts
+from bokeh.models.widgets import Slider, Panel, Tabs
 
 class fig2d:
     def __init__(self, ng_dic=None, ng_data=None):
         self.dic = ng_dic
         self.data = ng_data
+
+        # Get Universal dictionary
+        # for uniform listing of spectal parameter
+        self.udic = ng.pipe.guess_udic(ng_dic, ng_data)
         
         # reference data in more common NMR units using the unit_coversion object.
         self.uc0 = ng.pipe.make_uc(self.dic, self.data, dim=0) # m, rows, y-axis
@@ -97,7 +103,12 @@ class fig2d:
     
     def get_fig(self):
         # Make figure
+        #tools = "pan, wheel_zoom, box_zoom, reset, box_select, lasso_select, help"
         fig = bplt.figure(plot_width=400,plot_height=400, x_range=(self.x0_ppm, self.x1_ppm), y_range=(self.y0_ppm, self.y1_ppm))
+        # Add tools
+        #fig.add_tools(LassoSelectTool())
+        #fig.add_tools(BoxSelectTool())
+
         # Get contour paths
         cdata, ctext = self.get_contours()
         # Define figure source
@@ -105,8 +116,18 @@ class fig2d:
         fig.multi_line(xs='xs', ys='ys', line_color='line_color', source=source)
         #fig.text(x='xt',y='yt',text='text',source=source,text_baseline='middle',text_align='center')
 
-        # Set x-limg
+        # Set label
+        fig.xaxis.axis_label = self.udic[1]['label'] + ' ppm'
+        fig.yaxis.axis_label = self.udic[0]['label'] + ' ppm'
+
+        # Set limits
         fig.x_range = Range1d(183.5, 167.5)
         fig.y_range = Range1d(139.5, 95.5)
 
-        return fig    
+        # Make Slider
+        slider = Slider(start=0, end=10, value=1, step=1, title="Stuff")
+
+        # Make layout
+        layout = bokeh.layouts.row( fig, bokeh.layouts.widgetbox(slider))
+
+        return fig, layout
