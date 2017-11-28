@@ -25,7 +25,7 @@ Examples with nbviewer.jupyter.org
 
 * nmrglue_s4_2d_plotting_
 
-.. _nmrglue_s4_2d_plotting: https://github.com/tlinnet/drawnmr/blob/master/examples/nmrglue_s4_2d_plotting.ipynb
+.. _nmrglue_s4_2d_plotting: http://nbviewer.jupyter.org/github/tlinnet/drawnmr/blob/master/examples/nmrglue_s4_2d_plotting.ipynb
 
 What can drawnmr do?
 --------------------
