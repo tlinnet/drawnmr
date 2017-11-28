@@ -3,8 +3,8 @@ from matplotlib.contour import QuadContourSet
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 import bokeh.plotting as bplt
-from bokeh.models import ColumnDataSource, Range1d, LassoSelectTool, BoxZoomTool, BoxSelectTool
 import bokeh.layouts
+from bokeh.models import ColumnDataSource, Range1d, LassoSelectTool, BoxZoomTool, BoxSelectTool, HoverTool
 from bokeh.models.widgets import Slider, Panel, Tabs
 
 class fig2d:
@@ -108,6 +108,12 @@ class fig2d:
         # Add tools
         #fig.add_tools(LassoSelectTool())
         #fig.add_tools(BoxSelectTool())
+        #fig.add_tools(HoverTool())
+        fig.add_tools(HoverTool(tooltips=[
+                #("index", "$index"),
+                ("(x,y)", "($x, $y)"),
+                #("desc", "@desc")
+                ]))
 
         # Get contour paths
         cdata, ctext = self.get_contours()
