@@ -17,6 +17,8 @@ Important Links
 ---------------
 
 * Source code: https://github.com/tlinnet/drawnmr
+* Link to nmrglue: https://www.nmrglue.com and https://github.com/jjhelmus/nmrglue
+* Link to bokeh: https://bokeh.pydata.org and https://github.com/bokeh/bokeh
 
 What can drawnmr do?
 --------------------
@@ -32,7 +34,7 @@ How to install?
 --------------------
 If using conda, these steps will install an environment
 
-.. code-block:: python
+.. code-block:: bash
 
    # Create environment
    conda create -n py36 python=3.6
