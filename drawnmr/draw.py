@@ -1,3 +1,4 @@
+import numpy as np
 import nmrglue as ng
 from matplotlib.contour import QuadContourSet
 from matplotlib.axes import Axes
@@ -29,8 +30,8 @@ class fig2d:
         self.y_ppm_scale = self.uc0.ppm_scale()
 
         # Set default values
-        # contour level start value
-        self.contour_start =  8.5e4
+        # contour level start value. Only the last 1 percent of data is normally interesting.
+        self.contour_start =  np.percentile(self.data, 99)
         # number of contour levels
         self.contour_num = 20
         # scaling factor between contour levels
@@ -76,7 +77,7 @@ class fig2d:
         col = []
         text = []
         isolevelid = 0
-        for isolevel in contour_set.collections:
+        for level, isolevel in zip(cl, contour_set.collections):
             theiso = str(contour_set.get_array()[isolevelid])
             # Get colour
             isocol = isolevel.get_color()[0]
@@ -125,9 +126,5 @@ class fig2d:
         # Set label
         fig.xaxis.axis_label = self.udic[1]['label'] + ' ppm'
         fig.yaxis.axis_label = self.udic[0]['label'] + ' ppm'
-
-        # Set limits
-        fig.x_range = Range1d(183.5, 167.5)
-        fig.y_range = Range1d(139.5, 95.5)
 
         return fig
