@@ -72,7 +72,9 @@ Developer
    # Modify version in: drawnmr/__init__.py
    
    # Create tag
-   git tag 0.1 -m "Adds a tag so that we can put this on PyPI.".
+   VERS=`python -c "from drawnmr import __version__; print(__version__)"`
+   # Adds a tag so that we can put this on PyPI
+   git tag $VERS -m ""
    git push --tags origin master
    
    # Upload your package to PyPI Test
