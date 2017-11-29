@@ -82,7 +82,9 @@ Developer
    
    # Upload your package to PyPI Test
    python setup.py sdist upload -r pypitest
+   open https://testpypi.python.org/pypi/drawnmr
    
    # Upload to PyPI Live
    # Once you've successfully uploaded to PyPI Test, perform the same steps but point to the live PyPI server instead.
    python setup.py sdist upload -r pypi
+   open https://pypi.python.org/pypi/drawnmr
