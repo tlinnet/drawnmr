@@ -3,7 +3,6 @@ from matplotlib.contour import QuadContourSet
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 import bokeh.plotting as bplt
-import bokeh.layouts
 from bokeh.models import ColumnDataSource, Range1d, WidgetBox, LassoSelectTool, BoxZoomTool, BoxSelectTool, HoverTool
 from bokeh.models.widgets import Slider, Panel, Tabs
 from bokeh.io import push_notebook
@@ -131,11 +130,4 @@ class fig2d:
         fig.x_range = Range1d(183.5, 167.5)
         fig.y_range = Range1d(139.5, 95.5)
 
-        # Make Slider
-        slider = Slider(start=10, end=30, value=self.contour_num, step=1, title="Stuff")
-
-        # Make layout
-        #layout = bokeh.layouts.row( fig, bokeh.layouts.widgetbox(slider))
-        layout = bokeh.layouts.row( fig )
-
-        return fig, layout
+        return fig
