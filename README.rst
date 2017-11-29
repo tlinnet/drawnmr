@@ -30,13 +30,14 @@ The main purpose is to show NMR data in a Jupyter Notebook.
 If a Jupyter Notebook installation is not running, bokeh allow
 the output to be saved to static HTML files.
 
-Examples with nbviewer.jupyter.org
-----------------------------------
+Use interactive examples
+------------------------
 
-Launch interactive examples with mybinder.org
+Launch interactive Jupyter Notebook with mybinder.org and try examples:
+
 .. image:: https://mybinder.org/badge.svg :target: https://mybinder.org/v2/gh/tlinnet/drawnmr/master
 
-* nmrglue_s4_2d_plotting_
+* Or use nbviewer.jupyter.org to see the Notebook: nmrglue_s4_2d_plotting.ipynb_
 
 .. _nmrglue_s4_2d_plotting: http://nbviewer.jupyter.org/github/tlinnet/drawnmr/blob/master/examples/nmrglue_s4_2d_plotting.ipynb
 
