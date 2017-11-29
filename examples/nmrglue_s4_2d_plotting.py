@@ -28,18 +28,20 @@ ng_dic, ng_data = ng.pipe.read(ng_ft2)
 # Pass to figure class
 fig2d = draw.fig2d(ng_dic, ng_data)
 # Change contour_start
-fig2d.contour_start = 8.5e4
+fig2d.contour_start = 85e3
 
 # Get the boheh figure
 fig= fig2d.get_fig()
 
 """# Alter figure"""
 # Alter the figure after creation
-fig.xaxis.axis_label = "Nonsense"
-# Set limits
+#fig.xaxis.axis_label = "Nonsense"
+
+# Set limits for view
 fig.x_range = Range1d(183.5, 167.5)
 fig.y_range = Range1d(139.5, 95.5)
-# Set larger image
+
+# Set larger image size
 fig.plot_width = 800
 fig.plot_height = 800
 
