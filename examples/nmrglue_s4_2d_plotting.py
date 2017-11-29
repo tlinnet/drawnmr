@@ -39,6 +39,9 @@ fig.xaxis.axis_label = "Nonsense"
 # Set limits
 fig.x_range = Range1d(183.5, 167.5)
 fig.y_range = Range1d(139.5, 95.5)
+# Set larger image
+fig.plot_width = 800
+fig.plot_height = 800
 
 """# Show output"""
 # Get output. Either to Jupyter notebook or html file 
