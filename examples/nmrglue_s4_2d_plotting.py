@@ -30,7 +30,7 @@ fig2d = draw.fig2d(ng_dic, ng_data)
 # Change contour_start
 fig2d.contour_start = 85e3
 
-# Get the boheh figure
+# Get the bokeh figure
 fig= fig2d.get_fig()
 
 """# Alter figure"""
@@ -47,10 +47,10 @@ fig.plot_height = 800
 
 """# Show output"""
 # Get output. Either to Jupyter notebook or html file 
-if fig2d.isnotebook():
+if fig2d.isnotebook:
     from bokeh.io import output_notebook
     output_notebook()
-    bplt.show(fig)
+    bplt.show(fig, notebook_handle=True)
 else:
     # Save to html
     filename = "nmrglue_s4_2d_plotting.html"
@@ -59,3 +59,6 @@ else:
     # And auto open
     import webbrowser, os
     webbrowser.open('file://' + os.path.realpath(filename))
+
+"""# Change graph upon modification of contour_start"""
+#fig2d.change_contour_start(200e3)
