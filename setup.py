@@ -18,6 +18,7 @@ setup(
     description='A module for displaying NMR data with bokeh in Python or Jupyter Notebooks.',
     long_description=long_description,
     url='https://github.com/tlinnet/drawnmr',
+    download_url = 'https://github.com/tlinnet/drawnmr/archive/0.1.tar.gz'
     author='Troels Schwarz-Linnet',
     author_email='tlinnet@gmail.com',
     license='GNU General Public License v3 (GPLv3)',

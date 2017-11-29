@@ -38,7 +38,7 @@ If a Jupyter Notebook installation is not running, bokeh allow
 the output to be saved to static HTML files.
 
 How to install?
---------------------
+---------------
 If using conda, these steps will install an environment
 
 .. code-block:: bash
@@ -58,4 +58,33 @@ If using conda, these steps will install an environment
 
    # install package
    python setup.py install --force
+
+
+Developer
+---------
+
+* Guide for upload: http://peterdowns.com/posts/first-time-with-pypi.html
+* PyPI test account: http://testpypi.python.org/pypi?%3Aaction=register_form 
+* PyPI Live account: http://pypi.python.org/pypi?%3Aaction=register_form
+
+.. code-block:: bash
+
+   # Modify version in setup.py and drawnmr/__init__.py
+   
+   # Create tag
+   git tag 0.1 -m "Adds a tag so that we can put this on PyPI.".
+   git push --tags origin master
+   
+   # Upload your package to PyPI Test
+   # This will attempt to register your package against PyPI's test server, just to make sure you've set up everything correctly.
+   python setup.py register -r pypitest
+   
+   # Upload to pypi test
+   python setup.py sdist upload -r pypitest
+   
+   # Upload to PyPI Live
+   # Once you've successfully uploaded to PyPI Test, perform the same steps but point to the live PyPI server instead.
+   python setup.py register -r pypi
+   python setup.py sdist upload -r pypi
+   
    
