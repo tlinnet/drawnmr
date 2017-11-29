@@ -27,15 +27,13 @@ USER ${NB_USER}
 #ENV ANACONDA_PACKAGES=""
 #conda install -c anaconda $ANACONDA_PACKAGES && \
 
-#ENV CONDA_PACKAGES="bqplot"
+#ENV CONDA_PACKAGES=""
 #conda install -c conda-forge $CONDA_PACKAGES && \
 
 ENV PIP_PACKAGES="nmrglue drawnmr"
 #pip install $PIP_PACKAGES
 
 # RISE: Quickly turn your Jupyter Notebooks into a live presentation.
-# datashader: creating meaningful representations of large amounts of data.
-# HoloViews: Make data analysis and visualization seamless and simple
 
 # Install packages
 RUN echo "" && \
