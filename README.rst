@@ -54,5 +54,8 @@ If using conda, these steps will install an environment
    source activate py36
    
    # pip install
-   pip install -r requirements.txt 
+   pip install -r requirements.txt
+
+   # install package
+   python setup.py install --force
    
