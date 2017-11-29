@@ -36,5 +36,5 @@ setup(
     requires=['bokeh', 'numpy', 'matplotlib', 'nmrglue', 'scipy'],
     packages=[
         'drawnmr'],
-    package_data={'': ['README.rst', 'LICENSE']},
+    package_data={'drawnmr': ['README.rst', 'LICENSE']},
 )
