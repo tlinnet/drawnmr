@@ -2,6 +2,7 @@
 from drawnmr import draw
 import nmrglue as ng
 import bokeh.plotting as bplt
+from bokeh.models import Range1d
 
 """# Get data"""
 # Get data
@@ -26,12 +27,18 @@ ng_dic, ng_data = ng.pipe.read(ng_ft2)
 """# Create figure"""
 # Pass to figure class
 fig2d = draw.fig2d(ng_dic, ng_data)
+# Change contour_start
+fig2d.contour_start = 8.5e4
+
 # Get the boheh figure
 fig= fig2d.get_fig()
 
 """# Alter figure"""
 # Alter the figure after creation
 fig.xaxis.axis_label = "Nonsense"
+# Set limits
+fig.x_range = Range1d(183.5, 167.5)
+fig.y_range = Range1d(139.5, 95.5)
 
 """# Show output"""
 # Get output. Either to Jupyter notebook or html file 
