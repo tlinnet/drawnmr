@@ -20,13 +20,6 @@ Important Links
 * Link to nmrglue: https://www.nmrglue.com and https://github.com/jjhelmus/nmrglue
 * Link to bokeh: https://bokeh.pydata.org and https://github.com/bokeh/bokeh
 
-Examples with nbviewer.jupyter.org
-----------------------------------
-
-* nmrglue_s4_2d_plotting_
-
-.. _nmrglue_s4_2d_plotting: http://nbviewer.jupyter.org/github/tlinnet/drawnmr/blob/master/examples/nmrglue_s4_2d_plotting.ipynb
-
 What can drawnmr do?
 --------------------
 
@@ -36,6 +29,15 @@ to show the data in boheh, which is an interactive visualization library.
 The main purpose is to show NMR data in a Jupyter Notebook.
 If a Jupyter Notebook installation is not running, bokeh allow
 the output to be saved to static HTML files.
+
+Examples with nbviewer.jupyter.org
+----------------------------------
+
+* nmrglue_s4_2d_plotting_
+
+.. _nmrglue_s4_2d_plotting: http://nbviewer.jupyter.org/github/tlinnet/drawnmr/blob/master/examples/nmrglue_s4_2d_plotting.ipynb
+
+.. image:: https://raw.githubusercontent.com/tlinnet/drawnmr/master/docs/images/image_1.png
 
 How to install?
 ---------------
