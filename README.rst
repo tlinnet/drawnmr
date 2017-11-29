@@ -10,7 +10,7 @@ What is drawnmr?
 interact with NMR data.
 
 *nmrglue* is used for processing nmrdata, and *bokeh* is used
-for showing and interacting. A range of widgets is written to interact 
+for showing and interacting. A range of ipywidgets is planned to be written to interact 
 with the plot.
 
 Important Links
