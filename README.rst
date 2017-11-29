@@ -17,6 +17,7 @@ Important Links
 ---------------
 
 * Source code: https://github.com/tlinnet/drawnmr
+* PyPI package: https://pypi.python.org/pypi/drawnmr
 * Link to *nmrglue*: https://www.nmrglue.com and https://github.com/jjhelmus/nmrglue
 * Link to *bokeh*: https://bokeh.pydata.org and https://github.com/bokeh/bokeh
 
