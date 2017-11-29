@@ -51,6 +51,13 @@ If using conda, these steps will install an environment
 
 .. code-block:: bash
 
+   # With pip from https://pypi.python.org/pypi/drawnmr
+   pip install drawnmr
+
+
+Developer install
+.. code-block:: bash
+
    # Create environment
    conda create -n py36 python=3.6
    
@@ -66,6 +73,10 @@ If using conda, these steps will install an environment
 
    # install package
    python setup.py install --force
+   
+   # Uninstall
+   python setup.py install --record files.txt
+   cat files.txt | xargs rm -rf
 
 Developer
 ---------
