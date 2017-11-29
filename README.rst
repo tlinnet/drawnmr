@@ -33,6 +33,9 @@ the output to be saved to static HTML files.
 Examples with nbviewer.jupyter.org
 ----------------------------------
 
+Launch interactive examples with mybinder.org
+.. image:: https://mybinder.org/badge.svg :target: https://mybinder.org/v2/gh/tlinnet/drawnmr/master
+
 * nmrglue_s4_2d_plotting_
 
 .. _nmrglue_s4_2d_plotting: http://nbviewer.jupyter.org/github/tlinnet/drawnmr/blob/master/examples/nmrglue_s4_2d_plotting.ipynb
