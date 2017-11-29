@@ -59,11 +59,11 @@ If using conda, these steps will install an environment
    # install package
    python setup.py install --force
 
-
 Developer
 ---------
 
 * Guide for upload: http://peterdowns.com/posts/first-time-with-pypi.html
+* Updated info: https://packaging.python.org/guides/migrating-to-pypi-org/#uploading
 * PyPI test account: http://testpypi.python.org/pypi?%3Aaction=register_form 
 * PyPI Live account: http://pypi.python.org/pypi?%3Aaction=register_form
 
@@ -76,15 +76,8 @@ Developer
    git push --tags origin master
    
    # Upload your package to PyPI Test
-   # This will attempt to register your package against PyPI's test server, just to make sure you've set up everything correctly.
-   python setup.py register -r pypitest
-   
-   # Upload to pypi test
    python setup.py sdist upload -r pypitest
    
    # Upload to PyPI Live
    # Once you've successfully uploaded to PyPI Test, perform the same steps but point to the live PyPI server instead.
-   python setup.py register -r pypi
    python setup.py sdist upload -r pypi
-   
-   
