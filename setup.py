@@ -14,11 +14,11 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='drawnmr',
-    version='0.1',  # change this in drawnmr/__init__.py also
+    version='0.11',  # change this in drawnmr/__init__.py also
     description='A module for displaying NMR data with bokeh in Python or Jupyter Notebooks.',
     long_description=long_description,
     url='https://github.com/tlinnet/drawnmr',
-    download_url = 'https://github.com/tlinnet/drawnmr/archive/0.1.tar.gz'
+    download_url = 'https://github.com/tlinnet/drawnmr/archive/0.11.tar.gz'
     author='Troels Schwarz-Linnet',
     author_email='tlinnet@gmail.com',
     license='GNU General Public License v3 (GPLv3)',
