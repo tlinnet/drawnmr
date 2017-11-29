@@ -51,10 +51,10 @@ RUN echo "" && \
 # Copy examples from: 
 # https://github.com/tlinnet/drawnmr
 RUN echo "" && \
-    svn export https://github.com/tlinnet/drawnmr/examples drawnmr_examples
+    svn export https://github.com/tlinnet/drawnmr/trunk/examples drawnmr_examples
 
 # Possible sign Notebooks
-#RUN find . -type f -name '*.ipynb'|while read fname; do echo $fname; jupyter trust "$fname"; done
+RUN find . -type f -name '*.ipynb'|while read fname; do echo $fname; jupyter trust "$fname"; done
 
 # Possible copy other files to home. ${HOME}
 #COPY Dockerfile ${HOME}
