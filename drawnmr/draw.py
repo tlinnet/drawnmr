@@ -36,6 +36,9 @@ class fig2d:
         # scaling factor between contour levels
         self.contour_factor = 1.20
 
+        # Create initial ColumnDataSource
+        self.ColumnDataSource = None
+
     def isnotebook(self):
         try:
             shell = get_ipython().__class__.__name__
@@ -78,7 +81,9 @@ class fig2d:
         text = []
         isolevelid = 0
         for level, isolevel in zip(cl, contour_set.collections):
-            theiso = str(contour_set.get_array()[isolevelid])
+            level_round = round(level, 2)
+            #theiso = str(contour_set.get_array()[isolevelid])
+            theiso = str(level_round)
             # Get colour
             isocol = isolevel.get_color()[0]
             thecol = 3 * [None]
@@ -92,7 +97,7 @@ class fig2d:
                 y = v[:, 1]
                 xs.append(x.tolist())
                 ys.append(y.tolist())
-                zs.append([level])
+                zs.append([level_round])
                 xt.append(x[int(len(x) / 2)])
                 yt.append(y[int(len(y) / 2)])
                 text.append(theiso)
@@ -102,6 +107,14 @@ class fig2d:
         cdata={'xs': xs, 'ys': ys, 'line_color': col, 'zs': zs}
         ctext={'xt':xt,'yt':yt,'text':text}
         return cdata, ctext
+
+    def create_ColumnDataSource(self):
+        # Get contour paths
+        cdata, ctext = self.get_contours()
+
+        # Create ColumnDataSource
+        self.ColumnDataSource = bm.ColumnDataSource(cdata)
+        self.ColumnDataSourceText = bm.ColumnDataSource(ctext)
     
     def get_fig(self):
         # Make tools
@@ -119,12 +132,20 @@ class fig2d:
         # Activate scrool
         fig.toolbar.active_scroll = wheel_zoom
 
-        # Get contour paths
-        cdata, ctext = self.get_contours()
-        # Define figure source
-        source = bm.ColumnDataSource(cdata)
-        fig.multi_line(xs='xs', ys='ys', line_color='line_color', source=source)
-        #fig.text(x='xt',y='yt',text='text',source=source,text_baseline='middle',text_align='center')
+        # If not ColumnDataSource exists, then create
+        if not self.ColumnDataSource:
+            self.create_ColumnDataSource()
+
+        # Create figure
+        fig.multi_line(xs='xs', ys='ys', line_color='line_color', source=self.ColumnDataSource, legend="Contours")
+        # Possible for text: angle, angle_units, js_event_callbacks, js_property_callbacks, name,
+        # subscribed_events, tags, text, text_align, text_alpha, text_baseline, text_color, text_font, text_font_size,
+        # text_font_style, x, x_offset, y or y_offset
+        #fig.text(x='xt',y='yt',text='text', source=self.ColumnDataSourceText,
+        #    text_baseline='middle', text_align='center', text_font_size="10px", legend="Text")
+
+        # Hide glyphs in Interactive Legends
+        #fig.legend.click_policy="hide" # "mute"
 
         # Set label
         fig.xaxis.axis_label = self.udic[1]['label'] + ' ppm'
