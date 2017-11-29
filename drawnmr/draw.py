@@ -39,7 +39,10 @@ class fig2d:
         # Create initial ColumnDataSource
         self.ColumnDataSource = None
 
-    def isnotebook(self):
+        # Check notebook
+        self.isnotebook = self.check_isnotebook()
+
+    def check_isnotebook(self):
         try:
             shell = get_ipython().__class__.__name__
             if shell == 'ZMQInteractiveShell':
@@ -115,6 +118,32 @@ class fig2d:
         # Create ColumnDataSource
         self.ColumnDataSource = bm.ColumnDataSource(cdata)
         self.ColumnDataSourceText = bm.ColumnDataSource(ctext)
+
+    def change_contour_start(self, contour_start):
+        # Update value
+        self.contour_start = contour_start
+
+        # Get contour paths
+        cdata, ctext = self.get_contours()
+
+        # Patches
+        patches = {
+            'xs' : [ (slice(None), cdata['xs']) ],
+            'ys' : [ (slice(None), cdata['ys']) ],
+            'line_color' : [ (slice(None), cdata['line_color']) ],
+            'zs' : [ (slice(None), cdata['zs']) ],
+            }
+
+        # Apply patches
+        self.ColumnDataSource.patch(patches)
+
+        # Other method
+        #self.fig_multi.data_source.data['xs'] = cdata['xs']
+        #self.fig_multi.data_source.data['ys'] = cdata['ys']
+        #self.fig_multi.data_source.data['line_color'] = cdata['line_color']
+        #self.fig_multi.data_source.data['zs'] = cdata['zs']
+        if self.isnotebook:
+            push_notebook()
     
     def get_fig(self):
         # Make tools
@@ -137,7 +166,7 @@ class fig2d:
             self.create_ColumnDataSource()
 
         # Create figure
-        fig.multi_line(xs='xs', ys='ys', line_color='line_color', source=self.ColumnDataSource, legend="Contours")
+        self.fig_multi = fig.multi_line(xs='xs', ys='ys', line_color='line_color', source=self.ColumnDataSource, legend="Contours")
         # Possible for text: angle, angle_units, js_event_callbacks, js_property_callbacks, name,
         # subscribed_events, tags, text, text_align, text_alpha, text_baseline, text_color, text_font, text_font_size,
         # text_font_style, x, x_offset, y or y_offset
