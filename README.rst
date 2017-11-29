@@ -5,8 +5,8 @@ drawnmr
 What is drawnmr?
 ----------------
 
-drawnmr is a module for viewing NMR data in Python. When used with the
-nmrglue and bokeh packages, drawnmr provides functions to view and
+**drawnmr** is a module for viewing NMR data in Python. When used with the
+nmrglue and bokeh packages, **drawnmr** provides functions to view and
 interact with NMR data.
 
 nmrglue is used for processing nmrdata, and bokeh is used
@@ -23,7 +23,7 @@ Important Links
 What can drawnmr do?
 --------------------
 
-drawnmr is a wrapper around nmrglue capabilities and provide helper functions
+**drawnmr** is a wrapper around nmrglue capabilities and provide helper functions
 to show the data in boheh, which is an interactive visualization library.
 
 The main purpose is to show NMR data in a Jupyter Notebook.
