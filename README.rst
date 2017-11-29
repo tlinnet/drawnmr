@@ -40,7 +40,7 @@ Use interactive examples
 
 * Or use nbviewer.jupyter.org to see the Notebook: nmrglue_s4_2d_plotting.ipynb_
 
-.. _nmrglue_s4_2d_plotting: http://nbviewer.jupyter.org/github/tlinnet/drawnmr/blob/master/examples/nmrglue_s4_2d_plotting.ipynb
+.. _nmrglue_s4_2d_plotting.ipynb: http://nbviewer.jupyter.org/github/tlinnet/drawnmr/blob/master/examples/nmrglue_s4_2d_plotting.ipynb
 
 .. image:: https://raw.githubusercontent.com/tlinnet/drawnmr/master/docs/images/image_2.png
 .. image:: https://raw.githubusercontent.com/tlinnet/drawnmr/master/docs/images/image_1.png
