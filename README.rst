@@ -35,7 +35,8 @@ Use interactive examples
 
 Launch interactive Jupyter Notebook with mybinder.org and try examples:
 
-.. image:: https://mybinder.org/badge.svg :target: https://mybinder.org/v2/gh/tlinnet/drawnmr/master
+.. image:: https://mybinder.org/badge.svg
+   :target: https://mybinder.org/v2/gh/tlinnet/drawnmr/master
 
 * Or use nbviewer.jupyter.org to see the Notebook: nmrglue_s4_2d_plotting.ipynb_
 
