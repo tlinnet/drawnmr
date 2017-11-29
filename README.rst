@@ -69,7 +69,7 @@ Developer
 
 .. code-block:: bash
 
-   # Modify version in setup.py and drawnmr/__init__.py
+   # Modify version in: drawnmr/__init__.py
    
    # Create tag
    git tag 0.1 -m "Adds a tag so that we can put this on PyPI.".
