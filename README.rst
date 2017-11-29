@@ -55,7 +55,8 @@ If using conda, these steps will install an environment
    pip install drawnmr
 
 
-Developer install
+Developer install for local conda environment:
+
 .. code-block:: bash
 
    # Create environment
