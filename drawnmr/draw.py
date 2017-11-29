@@ -4,8 +4,7 @@ from matplotlib.contour import QuadContourSet
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 import bokeh.plotting as bplt
-from bokeh.models import ColumnDataSource, Range1d, WidgetBox, LassoSelectTool, BoxZoomTool, BoxSelectTool, HoverTool
-from bokeh.models.widgets import Slider, Panel, Tabs
+import bokeh.models as bm
 from bokeh.io import push_notebook
 
 class fig2d:
@@ -72,6 +71,7 @@ class fig2d:
         # To plot in bokeh
         xs = []
         ys = []
+        zs = []
         xt = []
         yt = []
         col = []
@@ -92,34 +92,37 @@ class fig2d:
                 y = v[:, 1]
                 xs.append(x.tolist())
                 ys.append(y.tolist())
+                zs.append([level])
                 xt.append(x[int(len(x) / 2)])
                 yt.append(y[int(len(y) / 2)])
                 text.append(theiso)
                 col.append(thecol)
             # Add to counter
             isolevelid += 1
-        cdata={'xs': xs, 'ys': ys, 'line_color': col}
+        cdata={'xs': xs, 'ys': ys, 'line_color': col, 'zs': zs}
         ctext={'xt':xt,'yt':yt,'text':text}
         return cdata, ctext
     
     def get_fig(self):
-        # Make figure
-        #tools = "pan, wheel_zoom, box_zoom, reset, box_select, lasso_select, help"
-        fig = bplt.figure(plot_width=400,plot_height=400, x_range=(self.x0_ppm, self.x1_ppm), y_range=(self.y0_ppm, self.y1_ppm))
-        # Add tools
-        #fig.add_tools(LassoSelectTool())
-        #fig.add_tools(BoxSelectTool())
-        #fig.add_tools(HoverTool())
-        fig.add_tools(HoverTool(tooltips=[
+        # Make tools
+        wheel_zoom = bm.WheelZoomTool()
+        hover = bm.HoverTool(tooltips=[
                 #("index", "$index"),
                 ("(x,y)", "($x, $y)"),
-                #("desc", "@desc")
-                ]))
+                ("int", "@zs"),
+                #("fill color", "$color[hex, swatch]:fill_color"),
+                #("Color", "@line_color"),
+                ])
+        tools = [bm.PanTool(), bm.BoxZoomTool(), wheel_zoom, bm.SaveTool(), bm.ResetTool(), bm.UndoTool(), bm.RedoTool(), bm.CrosshairTool(), hover]
+        # Make figure
+        fig = bplt.figure(plot_width=400,plot_height=400, x_range=(self.x0_ppm, self.x1_ppm), y_range=(self.y0_ppm, self.y1_ppm), tools=tools)
+        # Activate scrool
+        fig.toolbar.active_scroll = wheel_zoom
 
         # Get contour paths
         cdata, ctext = self.get_contours()
         # Define figure source
-        source = ColumnDataSource(cdata)
+        source = bm.ColumnDataSource(cdata)
         fig.multi_line(xs='xs', ys='ys', line_color='line_color', source=source)
         #fig.text(x='xt',y='yt',text='text',source=source,text_baseline='middle',text_align='center')
 
