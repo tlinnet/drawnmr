@@ -33,7 +33,7 @@ the output to be saved to static HTML files.
 Use interactive examples
 ------------------------
 
-Launch interactive Jupyter Notebook with mybinder.org and try examples:
+* Launch interactive Jupyter Notebook with mybinder.org and try examples:
 
 .. image:: https://mybinder.org/badge.svg
    :target: https://mybinder.org/v2/gh/tlinnet/drawnmr/master
