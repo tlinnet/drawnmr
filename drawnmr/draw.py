@@ -1,14 +1,9 @@
-import numpy as np
-import nmrglue as ng
-from matplotlib.contour import QuadContourSet
-from matplotlib.axes import Axes
-from matplotlib.figure import Figure
-import bokeh.plotting as bplt
-import bokeh.models as bm
-from bokeh.io import push_notebook
 
 class fig2d:
     def __init__(self, ng_dic=None, ng_data=None):
+        import nmrglue as ng
+        import numpy as np
+
         self.dic = ng_dic
         self.data = ng_data
 
@@ -64,6 +59,10 @@ class fig2d:
         return cl
 
     def get_contours(self):
+        from matplotlib.contour import QuadContourSet
+        from matplotlib.axes import Axes
+        from matplotlib.figure import Figure
+
         # Use method matplotlib
         fig = Figure()
         ax = Axes(fig, [0, 0, 1, 1])
@@ -137,6 +136,8 @@ class fig2d:
         self.update_ColumnDataSource()
 
     def update_ColumnDataSource(self):
+        from bokeh.io import push_notebook
+
         # Get contour paths
         cdata, ctext = self.get_contours()
 
@@ -160,6 +161,9 @@ class fig2d:
             push_notebook()
     
     def get_fig(self):
+        import bokeh.plotting as bplt
+        import bokeh.models as bm
+
         # Make tools
         wheel_zoom = bm.WheelZoomTool()
         hover = bm.HoverTool(tooltips=[
