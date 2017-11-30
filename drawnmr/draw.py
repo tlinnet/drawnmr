@@ -1,9 +1,9 @@
+import nmrglue as ng
+import numpy as np
+import bokeh.models as bm
 
 class fig2d:
     def __init__(self, ng_dic=None, ng_data=None):
-        import nmrglue as ng
-        import numpy as np
-
         self.dic = ng_dic
         self.data = ng_data
 
@@ -99,7 +99,7 @@ class fig2d:
                 y = v[:, 1]
                 xs.append(x.tolist())
                 ys.append(y.tolist())
-                zs.append([level_round])
+                zs.append(level)
                 xt.append(x[int(len(x) / 2)])
                 yt.append(y[int(len(y) / 2)])
                 text.append(theiso)
@@ -162,29 +162,29 @@ class fig2d:
     
     def get_fig(self):
         import bokeh.plotting as bplt
-        import bokeh.models as bm
 
         # Make tools
         wheel_zoom = bm.WheelZoomTool()
-        hover = bm.HoverTool(tooltips=[
+        self.hover = bm.HoverTool(tooltips=[
                 #("index", "$index"),
                 ("(x,y)", "($x, $y)"),
                 ("int", "@zs"),
+                ("VOL", "@VOL"),
                 #("fill color", "$color[hex, swatch]:fill_color"),
                 #("Color", "@line_color"),
                 ])
-        tools = [bm.PanTool(), bm.BoxZoomTool(), wheel_zoom, bm.SaveTool(), bm.ResetTool(), bm.UndoTool(), bm.RedoTool(), bm.CrosshairTool(), hover]
+        tools = [bm.PanTool(), bm.BoxZoomTool(), wheel_zoom, bm.SaveTool(), bm.ResetTool(), bm.UndoTool(), bm.RedoTool(), bm.CrosshairTool(), self.hover]
         # Make figure
-        fig = bplt.figure(plot_width=400,plot_height=400, x_range=(self.x0_ppm, self.x1_ppm), y_range=(self.y0_ppm, self.y1_ppm), tools=tools)
+        self.fig = bplt.figure(plot_width=400,plot_height=400, x_range=(self.x0_ppm, self.x1_ppm), y_range=(self.y0_ppm, self.y1_ppm), tools=tools)
         # Activate scrool
-        fig.toolbar.active_scroll = wheel_zoom
+        self.fig.toolbar.active_scroll = wheel_zoom
 
         # If not ColumnDataSource exists, then create
         if not self.ColumnDataSource:
             self.create_ColumnDataSource()
 
         # Create figure
-        self.fig_multi = fig.multi_line(xs='xs', ys='ys', line_color='line_color', source=self.ColumnDataSource, legend="Contours")
+        self.fig_multi = self.fig.multi_line(xs='xs', ys='ys', line_color='line_color', source=self.ColumnDataSource, legend="Contours")
         # Possible for text: angle, angle_units, js_event_callbacks, js_property_callbacks, name,
         # subscribed_events, tags, text, text_align, text_alpha, text_baseline, text_color, text_font, text_font_size,
         # text_font_style, x, x_offset, y or y_offset
@@ -192,13 +192,13 @@ class fig2d:
         #    text_baseline='middle', text_align='center', text_font_size="10px", legend="Text")
 
         # Hide glyphs in Interactive Legends
-        #fig.legend.click_policy="hide" # "mute"
+        self.fig.legend.click_policy="hide" # "mute"
 
         # Set label
-        fig.xaxis.axis_label = self.udic[1]['label'] + ' ppm'
-        fig.yaxis.axis_label = self.udic[0]['label'] + ' ppm'
+        self.fig.xaxis.axis_label = self.udic[1]['label'] + ' ppm'
+        self.fig.yaxis.axis_label = self.udic[0]['label'] + ' ppm'
 
-        return fig
+        return self.fig
 
     def get_contour_widget(self):
         import ipywidgets as widgets
@@ -221,3 +221,40 @@ class fig2d:
         w_label_contour = widgets.VBox([w_label, w_contour])
 
         return w_label_contour
+
+    def get_peakpick(self, pthres=None, **kwargs):
+        import pandas as pd
+
+        if pthres == None:
+            pthres = self.contour_start
+
+        # peak pick the data, return numpy rec.array
+        peaks = ng.peakpick.pick(self.data, pthres=pthres, **kwargs)
+
+        # Convert from point position to ppm
+        peak_locations_x_ppm = self.x_ppm_scale[peaks['X_AXIS'].astype(int)]
+        peak_locations_y_ppm = self.y_ppm_scale[peaks['Y_AXIS'].astype(int)]
+        peak_amplitudes = self.data[peaks['Y_AXIS'].astype('int'), peaks['X_AXIS'].astype('int')]
+
+        # Make dict, to pandas
+        cols = {'x_ppm': peak_locations_x_ppm,
+                'y_ppm': peak_locations_y_ppm,
+                'x_p': peaks['X_AXIS'].astype(int),
+                'y_p': peaks['Y_AXIS'].astype(int),
+                'cID': peaks['cID'].astype(int),
+                'VOL': peaks['VOL'],
+                'zs': peak_amplitudes
+                }
+        # Make pandas
+        df = pd.DataFrame.from_dict(cols)
+        # Rearrange
+        df = df[['x_ppm', 'y_ppm', 'x_p', 'y_p', 'cID', 'VOL', 'zs']]
+
+        # Plot
+        if hasattr(self, 'fig'):
+            # Make datasource
+            source = bm.ColumnDataSource(df)
+            # And plot
+            self.fig_peaks = self.fig.cross(x='x_ppm', y='y_ppm', source=source, size=20, color="#E6550D", line_width=2, legend="Peaks")
+
+        return df
