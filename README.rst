@@ -78,7 +78,9 @@ Developer install for local conda environment:
    
    # Uninstall
    python setup.py install --record files.txt
-   cat files.txt | xargs rm -rf
+   PACK=`dirname $(head -n 1 files.txt)`
+   rm -rf $PACK
+   #cat files.txt | xargs rm -rf
 
 Developer
 ---------
