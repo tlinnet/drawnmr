@@ -12,7 +12,7 @@ package_name = 'drawnmr'
 import sys
 from site import USER_SITE, USER_BASE
 rela_path = USER_SITE.split(USER_BASE)[-1][1:]
-install_to = path.join(sys.prefix, rela_path, package_name)
+install_to = path.join(rela_path, package_name)
 print(rela_path)
 print(install_to)
 
@@ -43,5 +43,5 @@ setup(
         'Operating System :: POSIX :: Linux'],
     requires=['bokeh', 'numpy', 'matplotlib', 'nmrglue', 'scipy', 'ipywidgets'],
     packages=['drawnmr'],
-    data_files=[(rela_path, ['README.rst', 'LICENSE'])],
+    data_files=[(install_to, ['README.rst', 'LICENSE'])],
 )
