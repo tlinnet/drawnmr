@@ -41,7 +41,7 @@ setup(
         'Operating System :: MacOS :: MacOS X',
         'Operating System :: Microsoft :: Windows',
         'Operating System :: POSIX :: Linux'],
-    requires=['bokeh', 'numpy', 'matplotlib', 'nmrglue', 'scipy', 'ipywidgets'],
+    requires=['bokeh', 'numpy', 'matplotlib', 'nmrglue', 'scipy', 'ipywidgets', 'pandas'],
     packages=['drawnmr'],
     data_files=[(install_to, ['README.rst', 'LICENSE'])],
 )
