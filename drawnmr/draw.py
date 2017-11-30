@@ -6,7 +6,6 @@ from matplotlib.figure import Figure
 import bokeh.plotting as bplt
 import bokeh.models as bm
 from bokeh.io import push_notebook
-import ipywidgets as widgets
 
 class fig2d:
     def __init__(self, ng_dic=None, ng_data=None):
@@ -198,6 +197,7 @@ class fig2d:
         return fig
 
     def get_contour_widget(self):
+        import ipywidgets as widgets
 
         # Make widgets
         w_label = widgets.Label(value="Settings for contour:")
