@@ -5,6 +5,7 @@
 #
 ## Activate environment
 # alias py36='source activate py36'
+# source activate py36
 #
 ## Pip install
 # pip install -U -r requirements.txt
