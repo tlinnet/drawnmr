@@ -6,6 +6,7 @@ from matplotlib.figure import Figure
 import bokeh.plotting as bplt
 import bokeh.models as bm
 from bokeh.io import push_notebook
+import ipywidgets as widgets
 
 class fig2d:
     def __init__(self, ng_dic=None, ng_data=None):
@@ -122,7 +123,21 @@ class fig2d:
     def change_contour_start(self, contour_start):
         # Update value
         self.contour_start = contour_start
+        self.update_ColumnDataSource()
 
+    def change_contour_start_w(self, change):
+        self.contour_start = change['new']
+        self.update_ColumnDataSource()
+
+    def change_contour_num_w(self, change):
+        self.contour_num = change['new']
+        self.update_ColumnDataSource()
+
+    def change_contour_factor_w(self, change):
+        self.contour_factor = change['new']
+        self.update_ColumnDataSource()
+
+    def update_ColumnDataSource(self):
         # Get contour paths
         cdata, ctext = self.get_contours()
 
@@ -181,3 +196,24 @@ class fig2d:
         fig.yaxis.axis_label = self.udic[0]['label'] + ' ppm'
 
         return fig
+
+    def get_contour_widget(self):
+
+        # Make widgets
+        w_label = widgets.Label(value="Settings for contour:")
+
+        w_contour_start = widgets.FloatText(value=self.contour_start, description='start:')
+        w_contour_start.observe(self.change_contour_start_w, names='value')
+
+        w_contour_num = widgets.IntText(value=self.contour_num, description='num:')
+        w_contour_num.observe(self.change_contour_num_w, names='value')
+
+        w_contour_factor = widgets.FloatText(value=self.contour_factor, description='factor:')
+        w_contour_factor.observe(self.change_contour_factor_w, names='value')
+
+        # Put next to each other
+        w_contour = widgets.HBox([w_contour_start, w_contour_num, w_contour_factor])
+        # Put on top of each Other
+        w_label_contour = widgets.VBox([w_label, w_contour])
+
+        return w_label_contour
