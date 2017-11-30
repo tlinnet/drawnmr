@@ -30,14 +30,14 @@ USER ${NB_USER}
 #ENV CONDA_PACKAGES=""
 #conda install -c conda-forge $CONDA_PACKAGES && \
 
-ENV PIP_PACKAGES="nmrglue drawnmr"
+ENV PIP_PACKAGES="nmrglue drawnmr ipywidgets"
 #pip install $PIP_PACKAGES
 
 # RISE: Quickly turn your Jupyter Notebooks into a live presentation.
 
 # Install packages
 RUN echo "" && \
-    pip install $PIP_PACKAGES && \
+    pip install -U $PIP_PACKAGES && \
     conda install -c damianavila82 rise
 
 # jupyter notebook password remove
