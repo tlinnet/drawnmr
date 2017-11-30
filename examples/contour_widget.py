@@ -1,6 +1,4 @@
 """# Get import"""
-import sys
-sys.path.append("/Users/tlinnet/software/drawnmr")
 from drawnmr import draw
 import nmrglue as ng
 import bokeh.plotting as bplt
