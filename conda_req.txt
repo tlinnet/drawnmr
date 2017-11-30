@@ -7,7 +7,8 @@
 # alias py36='source activate py36'
 #
 ## Pip install
-# pip install -r requirements.txt 
+# pip install -U -r requirements.txt
+# jupyter nbextension enable --py widgetsnbextension --sys-prefix
 #
 ## Remove environment or export
 # conda env remove -n py36
