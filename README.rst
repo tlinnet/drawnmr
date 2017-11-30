@@ -13,7 +13,7 @@ interact with NMR data.
 for showing and interacting. A range of ipywidgets is planned to be written to interact 
 with the plot.
 
-Important Links
+Important links
 ---------------
 
 * Source code: https://github.com/tlinnet/drawnmr
