@@ -55,7 +55,6 @@ If using conda, these steps will install an environment
    # With pip from https://pypi.python.org/pypi/drawnmr
    pip install drawnmr
 
-
 Developer install for local conda environment:
 
 .. code-block:: bash
@@ -71,7 +70,8 @@ Developer install for local conda environment:
    source activate py36
    
    # pip install
-   pip install -r requirements.txt
+   pip install -U -r requirements.txt
+   jupyter nbextension enable --py widgetsnbextension --sys-prefix
 
    # install package
    python setup.py install --force
