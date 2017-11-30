@@ -37,7 +37,7 @@ ENV PIP_PACKAGES="nmrglue drawnmr"
 
 # Install packages
 RUN echo "" && \
-    pip install $PIP_PACKAGES && \
+    pip install $PIP_PACKAGES  && \
     conda install -c damianavila82 rise
 
 # jupyter notebook password remove
