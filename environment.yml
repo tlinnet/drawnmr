@@ -1,0 +1,21 @@
+name: drawnmr
+channels:
+- defaults
+- conda-forge
+- damianavila82
+dependencies:
+- python>=3.5
+- numpy
+- scipy
+- matplotlib
+- bokeh
+- ipython
+- nbformat
+- jupyter
+- pandas
+- ipywidgets>=7.0
+- rise
+- pip:
+  - drawnmr
+  - nmrglue
+  - https://github.com/sklam/py2nb/archive/master.zip

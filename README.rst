@@ -60,23 +60,27 @@ Developer install for local conda environment:
 .. code-block:: bash
 
    # Create environment
-   conda create -n py36 python=3.6
-   
-   # Install conda packages into environment
-   conda install -y -n py36 --file conda_req.txt
+   conda env create -f environment.yml
    
    # Activate environment
-   alias py36='source activate py36'
-   source activate py36
+   conda env list
+   source activate drawnmr
    
-   # pip install
-   pip install -U -r requirements.txt
+   # Enable ipywidgets
+   jupyter nbextension list
    jupyter nbextension enable --py widgetsnbextension --sys-prefix
 
-   # install package
+   # Start jupyter
+   jupyter notebook
+
+Or manual install i root environment:
+
+.. code-block:: bash
+
+   # Manually install package
    python setup.py install --force
    
-   # Uninstall
+   #  Manually uninstall
    python setup.py install --record files.txt
    PACK=`dirname $(head -n 1 files.txt)`
    rm -rf $PACK
