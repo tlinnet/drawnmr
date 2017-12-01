@@ -1,6 +1,7 @@
 import nmrglue as ng
 import numpy as np
 import bokeh.models as bm
+import bokeh.palettes as bp
 
 class fig2d:
     def __init__(self, ng_dic=None, ng_data=None):
@@ -31,12 +32,13 @@ class fig2d:
         self.contour_num = 20
         # scaling factor between contour levels
         self.contour_factor = 1.20
-
         # Create initial ColumnDataSource
         self.ColumnDataSource = None
-
         # Check notebook
         self.isnotebook = self.check_isnotebook()
+        # Peaks counter
+        self.peaks_i = 0
+        self.peaks_color = bp.d3['Category10'][10]
 
     def check_isnotebook(self):
         try:
@@ -80,22 +82,24 @@ class fig2d:
         # To plot in bokeh
         xs = []
         ys = []
-        zs = []
+        intensity = []
         xt = []
         yt = []
         col = []
         text = []
         isolevelid = 0
+        color_palettes = bp.viridis(len(cl))
         for level, isolevel in zip(cl, contour_set.collections):
             level_round = round(level, 2)
             #theiso = str(contour_set.get_array()[isolevelid])
             theiso = str(level_round)
             # Get colour
-            isocol = isolevel.get_color()[0]
-            thecol = 3 * [None]
-            for i in range(3):
-                thecol[i] = int(255 * isocol[i])
-            thecol = '#%02x%02x%02x' % (thecol[0], thecol[1], thecol[2])
+            #isocol = isolevel.get_color()[0]
+            #thecol = 3 * [None]
+            #for i in range(3):
+            #    thecol[i] = int(255 * isocol[i])
+            #thecol = '#%02x%02x%02x' % (thecol[0], thecol[1], thecol[2])
+            thecol = color_palettes[isolevelid]
 
             for path in isolevel.get_paths():
                 v = path.vertices
@@ -103,14 +107,14 @@ class fig2d:
                 y = v[:, 1]
                 xs.append(x.tolist())
                 ys.append(y.tolist())
-                zs.append(level)
+                intensity.append(level)
                 xt.append(x[int(len(x) / 2)])
                 yt.append(y[int(len(y) / 2)])
                 text.append(theiso)
                 col.append(thecol)
             # Add to counter
             isolevelid += 1
-        cdata={'xs': xs, 'ys': ys, 'line_color': col, 'zs': zs}
+        cdata={'xs': xs, 'ys': ys, 'line_color': col, 'intensity': intensity}
         ctext={'xt':xt,'yt':yt,'text':text}
         return cdata, ctext
 
@@ -150,7 +154,7 @@ class fig2d:
             'xs' : [ (slice(None), cdata['xs']) ],
             'ys' : [ (slice(None), cdata['ys']) ],
             'line_color' : [ (slice(None), cdata['line_color']) ],
-            'zs' : [ (slice(None), cdata['zs']) ],
+            'intensity' : [ (slice(None), cdata['intensity']) ],
             }
 
         # Apply patches
@@ -160,7 +164,7 @@ class fig2d:
         #self.fig_multi.data_source.data['xs'] = cdata['xs']
         #self.fig_multi.data_source.data['ys'] = cdata['ys']
         #self.fig_multi.data_source.data['line_color'] = cdata['line_color']
-        #self.fig_multi.data_source.data['zs'] = cdata['zs']
+        #self.fig_multi.data_source.data['intensity'] = cdata['intensity']
         if self.isnotebook:
             push_notebook()
     
@@ -172,7 +176,7 @@ class fig2d:
         self.hover = bm.HoverTool(tooltips=[
                 #("index", "$index"),
                 ("(x,y)", "($x, $y)"),
-                ("int", "@zs"),
+                ("int", "@intensity"),
                 ("VOL", "@VOL"),
                 #("fill color", "$color[hex, swatch]:fill_color"),
                 #("Color", "@line_color"),
@@ -240,8 +244,12 @@ class fig2d:
         peaks = ng.peakpick.pick(self.data, pthres=pthres, **kwargs)
 
         # Convert from point position to ppm
-        peak_locations_x_ppm = self.x_ppm_scale[peaks['X_AXIS'].astype(int)]
-        peak_locations_y_ppm = self.y_ppm_scale[peaks['Y_AXIS'].astype(int)]
+        if self.dic:
+            peak_locations_x_ppm = self.x_ppm_scale[peaks['X_AXIS'].astype(int)]
+            peak_locations_y_ppm = self.y_ppm_scale[peaks['Y_AXIS'].astype(int)]
+        else:
+            peak_locations_x_ppm = [np.nan] * len(peaks['X_AXIS'])
+            peak_locations_y_ppm = [np.nan] * len(peaks['Y_AXIS'])
         peak_amplitudes = self.data[peaks['Y_AXIS'].astype('int'), peaks['X_AXIS'].astype('int')]
 
         # Make dict, to pandas
@@ -251,18 +259,23 @@ class fig2d:
                 'y_p': peaks['Y_AXIS'].astype(int),
                 'cID': peaks['cID'].astype(int),
                 'VOL': peaks['VOL'],
-                'zs': peak_amplitudes
+                'intensity': peak_amplitudes
                 }
         # Make pandas
         df = pd.DataFrame.from_dict(cols)
         # Rearrange
-        df = df[['x_ppm', 'y_ppm', 'x_p', 'y_p', 'cID', 'VOL', 'zs']]
+        df = df[['x_ppm', 'y_ppm', 'x_p', 'y_p', 'cID', 'VOL', 'intensity']]
 
         # Plot
         if hasattr(self, 'fig'):
             # Make datasource
             source = bm.ColumnDataSource(df)
             # And plot
-            self.fig_peaks = self.fig.cross(x='x_ppm', y='y_ppm', source=source, size=20, color="#E6550D", line_width=2, legend="Peaks")
+            thecol = self.peaks_color[self.peaks_i%10] # Keep index with 0-9
+            if self.dic:
+                self.fig_peaks = self.fig.cross(x='x_ppm', y='y_ppm', source=source, size=20, color=thecol, line_width=2, legend="Peaks %i"%(self.peaks_i))
+            else:
+                self.fig_peaks = self.fig.cross(x='x_p', y='y_p', source=source, size=20, color=thecol, line_width=2, legend="Peaks %i"%(self.peaks_i))
+            self.peaks_i += 1
 
         return df
