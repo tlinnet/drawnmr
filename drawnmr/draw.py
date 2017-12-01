@@ -4,24 +4,25 @@ import bokeh.models as bm
 
 class fig2d:
     def __init__(self, ng_dic=None, ng_data=None):
-        self.dic = ng_dic
         self.data = ng_data
+        self.dic = ng_dic
 
-        # Get Universal dictionary
-        # for uniform listing of spectal parameter
-        self.udic = ng.pipe.guess_udic(ng_dic, ng_data)
+        if self.dic:
+            # Get Universal dictionary
+            # for uniform listing of spectal parameter
+            self.udic = ng.pipe.guess_udic(self.dic, ng_data)
         
-        # reference data in more common NMR units using the unit_coversion object.
-        self.uc0 = ng.pipe.make_uc(self.dic, self.data, dim=0) # m, rows, y-axis
-        self.uc1 = ng.pipe.make_uc(self.dic, self.data, dim=1) # n, columns, x-axis
+            # reference data in more common NMR units using the unit_coversion object.
+            self.uc0 = ng.pipe.make_uc(self.dic, self.data, dim=0) # m, rows, y-axis
+            self.uc1 = ng.pipe.make_uc(self.dic, self.data, dim=1) # n, columns, x-axis
 
-        # Get ppm limits
-        self.x0_ppm, self.x1_ppm = self.uc1.ppm_limits()
-        self.y0_ppm, self.y1_ppm = self.uc0.ppm_limits()
+            # Get ppm limits
+            self.x0_ppm, self.x1_ppm = self.uc1.ppm_limits()
+            self.y0_ppm, self.y1_ppm = self.uc0.ppm_limits()
         
-        # Calculate ppm range
-        self.x_ppm_scale = self.uc1.ppm_scale()
-        self.y_ppm_scale = self.uc0.ppm_scale()
+            # Calculate ppm range
+            self.x_ppm_scale = self.uc1.ppm_scale()
+            self.y_ppm_scale = self.uc0.ppm_scale()
 
         # Set default values
         # contour level start value. Only the last 1 percent of data is normally interesting.
@@ -67,7 +68,10 @@ class fig2d:
         fig = Figure()
         ax = Axes(fig, [0, 0, 1, 1])
         # Get extent
-        extent=(self.x0_ppm, self.x1_ppm, self.y0_ppm, self.y1_ppm)
+        if self.dic:
+            extent=(self.x0_ppm, self.x1_ppm, self.y0_ppm, self.y1_ppm)
+        else:
+            extent=None
         # calculate contour levels
         cl = self.get_contour_levels()
         # Get contours
@@ -175,7 +179,10 @@ class fig2d:
                 ])
         tools = [bm.PanTool(), bm.BoxZoomTool(), wheel_zoom, bm.SaveTool(), bm.ResetTool(), bm.UndoTool(), bm.RedoTool(), bm.CrosshairTool(), self.hover]
         # Make figure
-        self.fig = bplt.figure(plot_width=400,plot_height=400, x_range=(self.x0_ppm, self.x1_ppm), y_range=(self.y0_ppm, self.y1_ppm), tools=tools)
+        if self.dic:
+            self.fig = bplt.figure(plot_width=400,plot_height=400, x_range=(self.x0_ppm, self.x1_ppm), y_range=(self.y0_ppm, self.y1_ppm), tools=tools)
+        else:
+            self.fig = bplt.figure(plot_width=400,plot_height=400, tools=tools)
         # Activate scrool
         self.fig.toolbar.active_scroll = wheel_zoom
 
@@ -195,8 +202,9 @@ class fig2d:
         self.fig.legend.click_policy="hide" # "mute"
 
         # Set label
-        self.fig.xaxis.axis_label = self.udic[1]['label'] + ' ppm'
-        self.fig.yaxis.axis_label = self.udic[0]['label'] + ' ppm'
+        if self.dic:
+            self.fig.xaxis.axis_label = self.udic[1]['label'] + ' ppm'
+            self.fig.yaxis.axis_label = self.udic[0]['label'] + ' ppm'
 
         return self.fig
 
