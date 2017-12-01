@@ -58,7 +58,7 @@ if fig2d.isnotebook:
     display(contour_widget)
 else:
     # Save to html
-    filename = "nmrglue_s4_2d_plotting.html"
+    filename = "bokeh.html"
     bplt.output_file(filename)
     bplt.save(fig)
     # And auto open

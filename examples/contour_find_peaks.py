@@ -65,7 +65,7 @@ if fig2d.isnotebook:
     bplt.show(fig, notebook_handle=True)
 else:
     # Save to html
-    filename = "nmrglue_s4_2d_plotting.html"
+    filename = "bokeh.html"
     bplt.output_file(filename)
     bplt.save(fig)
     # And auto open
