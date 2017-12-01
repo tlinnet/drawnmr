@@ -9,9 +9,19 @@ What is drawnmr?
 *nmrglue* and *bokeh* packages, **drawnmr** provides functions to view and
 interact with NMR data.
 
+**drawnmr** is a wrapper around *nmrglue* capabilities and provide helper functions
+to show the data in bokeh, which is an interactive visualisation library.
+
+The main purpose is to show NMR data in a Jupyter Notebook.
+If a Jupyter Notebook installation is not running, *bokeh* allow
+the output to be saved to static HTML files.
+
 *nmrglue* is used for processing nmrdata, and *bokeh* is used
-for showing and interacting. A range of ipywidgets is planned to be written to interact 
-with the plot.
+for showing and interacting. The function *get_contour_widget()*
+create ipywidgets to easily control contour levels. The function 
+*get_peakpick()* calls *nmrglue* *peakpick.pick()* to find peaks, 
+convert from data point to ppm coordinates, store in a *pandas* dataframe for
+easy inspection and add the peaks to the *bokeh* plot.
 
 Important links
 ---------------
@@ -21,27 +31,25 @@ Important links
 * Link to *nmrglue*: https://www.nmrglue.com and https://github.com/jjhelmus/nmrglue
 * Link to *bokeh*: https://bokeh.pydata.org and https://github.com/bokeh/bokeh
 
-What can drawnmr do?
---------------------
-
-**drawnmr** is a wrapper around *nmrglue* capabilities and provide helper functions
-to show the data in boheh, which is an interactive visualization library.
-
-The main purpose is to show NMR data in a Jupyter Notebook.
-If a Jupyter Notebook installation is not running, *bokeh* allow
-the output to be saved to static HTML files.
-
-Use interactive examples
+See examples
 ------------------------
 
-* Launch interactive Jupyter Notebook with mybinder.org and try examples:
+Use **nbviewer.jupyter.org** to:
+
+* See default Notebook 15N/13C 2D contour: nmrglue_s4_2d_plotting.ipynb_
+* See how to use widgets to alter contour levels: contour_widget.ipynb_
+* See how to use nmrglue peak pick, print table and show: contour_find_peaks.ipynb_
+
+.. _nmrglue_s4_2d_plotting.ipynb: http://nbviewer.jupyter.org/github/tlinnet/drawnmr/blob/master/examples/nmrglue_s4_2d_plotting.ipynb
+.. _contour_widget.ipynb: http://nbviewer.jupyter.org/github/tlinnet/drawnmr/blob/master/examples/contour_widget.ipynb
+.. _contour_find_peaks.ipynb: http://nbviewer.jupyter.org/github/tlinnet/drawnmr/blob/master/examples/contour_find_peaks.ipynb
+
+Launch interactive Jupyter Notebook mybinder.org_ to try examples:
+
+.. _mybinder.org: https://mybinder.org/v2/gh/tlinnet/drawnmr/master
 
 .. image:: https://mybinder.org/badge.svg
    :target: https://mybinder.org/v2/gh/tlinnet/drawnmr/master
-
-* Or use nbviewer.jupyter.org to see the Notebook: nmrglue_s4_2d_plotting.ipynb_
-
-.. _nmrglue_s4_2d_plotting.ipynb: http://nbviewer.jupyter.org/github/tlinnet/drawnmr/blob/master/examples/nmrglue_s4_2d_plotting.ipynb
 
 .. image:: https://raw.githubusercontent.com/tlinnet/drawnmr/master/docs/images/image_2.png
 .. image:: https://raw.githubusercontent.com/tlinnet/drawnmr/master/docs/images/image_1.png
@@ -73,7 +81,7 @@ Developer install for local conda environment:
    # Start jupyter
    jupyter notebook
 
-Or manual install i root environment:
+Or manual install in root environment:
 
 .. code-block:: bash
 
