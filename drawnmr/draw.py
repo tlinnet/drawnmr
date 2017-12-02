@@ -58,7 +58,10 @@ class fig2d:
 
     def get_contour_levels(self):
         # calculate contour levels
-        cl = [self.contour_start * self.contour_factor ** x for x in range(self.contour_num)]
+        if self.contour_factor:
+            cl = [self.contour_start * self.contour_factor ** x for x in range(self.contour_num)]
+        else:
+            cl = np.linspace(self.contour_start, self.data.max(), self.contour_num)
         return cl
 
     def get_contours(self):
