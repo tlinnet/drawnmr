@@ -28,6 +28,7 @@ class fig2d:
         # Set default values
         # contour level start value. Only the last 1 percent of data is normally interesting.
         self.contour_start =  np.percentile(self.data, 99)
+        self.contour_end =  None
         # number of contour levels
         self.contour_num = 20
         # scaling factor between contour levels
@@ -61,7 +62,9 @@ class fig2d:
         if self.contour_factor:
             cl = [self.contour_start * self.contour_factor ** x for x in range(self.contour_num)]
         else:
-            cl = np.linspace(self.contour_start, self.data.max(), self.contour_num)
+            if not self.contour_end:
+                self.contour_end = self.data.max()
+            cl = np.linspace(self.contour_start, self.contour_end, self.contour_num)
         return cl
 
     def get_contours(self):
