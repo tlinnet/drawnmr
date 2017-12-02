@@ -22,7 +22,8 @@ d = np.sin(xx)*np.cos(yy)
 # Pass to figure class
 fig2d = draw.fig2d(ng_data=d)
 # Change contour_start
-fig2d.contour_start = np.percentile(d, 70)
+fig2d.contour_start = -1.
+fig2d.contour_factor = None
 
 # Get the bokeh figure
 fig= fig2d.get_fig()
