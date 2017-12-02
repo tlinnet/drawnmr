@@ -235,10 +235,14 @@ class fig2d:
         return w_label_contour
 
     def get_peakpick(self, pthres=None, **kwargs):
+        """# Get doc string from sub function"""
+        fig2d.get_peakpick.__doc__ = ng.peakpick.pick.__doc__
         import pandas as pd
 
         if pthres == None:
-            pthres = self.contour_start
+            if 'pthres' in kwargs:
+                pthres = kwargs['pthres']
+            #else: pthres = self.contour_start
 
         # peak pick the data, return numpy rec.array
         peaks = ng.peakpick.pick(self.data, pthres=pthres, **kwargs)
